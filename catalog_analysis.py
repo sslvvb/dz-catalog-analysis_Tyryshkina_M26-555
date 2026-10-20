@@ -158,6 +158,32 @@ def top_n_by_rating(movies, n=3):
     return [(movie["title"], movie["rating"]) for movie in sorted_movies[:n]]
 
 
+def count_by_genre(movies):
+    genre_counts = {}
+    for movie in movies:
+        for genre in movie["genres"]:
+            genre_counts[genre] = genre_counts.get(genre, 0) + 1
+    return genre_counts
+
+
+def actor_filmography(movies):
+    filmography = {}
+    for movie in movies:
+        for actor in movie["actors"]:
+            filmography[actor] = filmography.get(actor, [])
+            filmography[actor].append(movie["title"])
+    return filmography
+
+
+def above_average_ratings(movies):
+    average = average_rating(movies)
+    return {
+        movie["title"]: movie["rating"]
+        for movie in movies
+        if movie["rating"] > average
+    }
+
+
 def main():
     # Step 1
     # print(average_rating(movies))
@@ -200,8 +226,13 @@ def main():
     #     print(format_report_line(movie))
 
     # Step 5
-    print(titles_sorted_by_rating(movies))
-    print(top_n_by_rating(movies))
+    # print(titles_sorted_by_rating(movies))
+    # print(top_n_by_rating(movies))
+
+    # Step 6
+    print(count_by_genre(movies))
+    print(actor_filmography(movies))
+    print(above_average_ratings(movies))
 
 
 if __name__ == "__main__":
