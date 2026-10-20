@@ -129,25 +129,65 @@ def count_long_movies(movies, threshold=120):
     return count
 
 
+def normalize_title(title):
+    words = title.split()
+    normalized_words = [word[0].upper() + word[1:] for word in words]
+    return " ".join(normalized_words)
+
+
+def make_slug(title):
+    return title.lower().replace(" ", "-")
+
+
+def format_report_line(movie):
+    genres = ", ".join(sorted(movie["genres"]))
+    return (
+        f'"{normalize_title(movie["title"])}" ({movie["year"]}) — '
+        f'{movie["rating"]}/10, {duration_in_hours(movie["duration_min"])}, '
+        f"жанры: {genres}"
+    )
+
+
 def main():
-    print("Фильмы не в жанре comedy:")
+    # Step 1
+    # print(average_rating(movies))
+    # print(catalog_age_stats(movies))
+    # for movie in movies:
+    #     print(duration_in_hours(movie["duration_min"]))
+
+    # Step 2
+    # for movie in movies:
+    #     print(rating_tier(movie["rating"]))
+    # for movie in movies:
+    #     print(decade_label(movie["year"]))
+
+    # Step 3
+    # print("Фильмы не в жанре comedy:")
+    # for movie in movies:
+    #     if "comedy" in movie["genres"]:
+    #         continue
+    #     print(movie["title"])
+
+    # print("Первый фильм с рейтингом выше 9.0:")
+    # movie_index = 0
+    # while movie_index < len(movies):
+    #     movie = movies[movie_index]
+    #     if movie["rating"] > 9.0:
+    #         print(movie["title"])
+    #         break
+    #     movie_index += 1
+    # else:
+    #     print("Шедевров не найдено")
+
+    # print(f"Фильмов длиннее 120 минут: {count_long_movies(movies)}")
+
+    # Step 4
     for movie in movies:
-        if "comedy" in movie["genres"]:
-            continue
-        print(movie["title"])
-
-    print("Первый фильм с рейтингом выше 9.0:")
-    movie_index = 0
-    while movie_index < len(movies):
-        movie = movies[movie_index]
-        if movie["rating"] > 9.0:
-            print(movie["title"])
-            break
-        movie_index += 1
-    else:
-        print("Шедевров не найдено")
-
-    print(f"Фильмов длиннее 120 минут: {count_long_movies(movies)}")
+        print(normalize_title(movie["title"]))
+    for movie in movies:
+        print(make_slug(movie["title"]))
+    for movie in movies:
+        print(format_report_line(movie))
 
 
 if __name__ == "__main__":
