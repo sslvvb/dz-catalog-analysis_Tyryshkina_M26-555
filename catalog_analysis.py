@@ -148,6 +148,16 @@ def format_report_line(movie):
     )
 
 
+def titles_sorted_by_rating(movies):
+    sorted_movies = sorted(movies, key=lambda movie: movie["rating"], reverse=True)
+    return [movie["title"] for movie in sorted_movies]
+
+
+def top_n_by_rating(movies, n=3):
+    sorted_movies = sorted(movies, key=lambda movie: movie["rating"], reverse=True)
+    return [(movie["title"], movie["rating"]) for movie in sorted_movies[:n]]
+
+
 def main():
     # Step 1
     # print(average_rating(movies))
@@ -182,12 +192,16 @@ def main():
     # print(f"Фильмов длиннее 120 минут: {count_long_movies(movies)}")
 
     # Step 4
-    for movie in movies:
-        print(normalize_title(movie["title"]))
-    for movie in movies:
-        print(make_slug(movie["title"]))
-    for movie in movies:
-        print(format_report_line(movie))
+    # for movie in movies:
+    #     print(normalize_title(movie["title"]))
+    # for movie in movies:
+    #     print(make_slug(movie["title"]))
+    # for movie in movies:
+    #     print(format_report_line(movie))
+
+    # Step 5
+    print(titles_sorted_by_rating(movies))
+    print(top_n_by_rating(movies))
 
 
 if __name__ == "__main__":
