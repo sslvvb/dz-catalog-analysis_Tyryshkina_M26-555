@@ -3,3 +3,4 @@ task.md
 note.md
 tmp/
 .ruff_cache
+__pycache__
